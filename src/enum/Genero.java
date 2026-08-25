@@ -1,5 +1,4 @@
-package enum;
-
-public class Genero {
-    
+public enum Genero {
+    MASCULINO,
+    FEMENINO
 }
