@@ -1,3 +1,5 @@
+package enums;
+
 public enum Distintivo {
     GORRA,
     PELADO,
@@ -5,5 +7,6 @@ public enum Distintivo {
     BARBA,
     RULOS,
     BIGOTE,
-    PECAS
+    PECAS,
+    NINGUNO
 }
