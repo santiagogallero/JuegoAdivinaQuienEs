@@ -1,3 +1,4 @@
+import model.Personaje;
 import java.util.Scanner;
 
 
@@ -23,6 +24,8 @@ public class Main {
 
         } while (intento != elegido.getId());
         System.out.println("Ganaste, el eledigo era: " + elegido.getNombre());
+
+
 
     }
 }

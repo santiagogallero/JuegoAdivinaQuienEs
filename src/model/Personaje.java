@@ -1,3 +1,6 @@
+package model;
+import enums.Elegido;
+
 public class Personaje {
     private String nombre;
     private Elegido estado;

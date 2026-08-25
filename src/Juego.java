@@ -1,3 +1,5 @@
+import enums.Elegido;
+import model.Personaje;
 import java.util.Random;
 import java.util.ArrayList;
 
