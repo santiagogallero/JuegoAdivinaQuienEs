@@ -1,28 +1,31 @@
 package model;
 import enums.ColorPelo;
-import enums.Elegido;
-import enums.Distintivo;
 import enums.Genero;
 
 public class Personaje {
-    private String nombre;
-    private Elegido estado;
-    private Integer id;
-    private Distintivo filtro;
-    private ColorPelo colorPelo;
-    private Genero genero;
+    private  static  int contador = 1;
+    private final String nombre;
+
+    private final Integer id;
+    private final ColorPelo colorPelo;
+    private final Genero genero;
+    private final boolean calvo;
+    private final boolean usaLentes;
 
 
-    public Personaje(String nombre, Elegido estado, Integer id, Distintivo filtro, ColorPelo colorPelo, Genero genero) {
+
+
+    public Personaje(String nombre,boolean usaLentes , ColorPelo colorPelo, Genero genero, boolean calvo) {
+        
+        this.id = contador++;
         this.nombre = nombre;
-        this.estado = estado;
-        this.id = id;
-        this.filtro = filtro;
+        this.usaLentes = usaLentes;
         this.colorPelo = colorPelo;
         this.genero = genero;
+        this.calvo = calvo;
     }
 
-    public String getNombre() {
+        public String getNombre() {
         return nombre;
     }
 
@@ -30,21 +33,17 @@ public class Personaje {
         return id;
     }
 
-    public Elegido getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Elegido estado) {
-        this.estado = estado;
-    }
-
-    public Distintivo getFiltro() {
-        return filtro;
+    public boolean isUsaLentes() {
+        return usaLentes;
     }
 
 
     public ColorPelo getColorPelo() {
         return colorPelo;
+    }
+
+    public boolean isCalvo() {
+        return calvo;
     }
 
 
