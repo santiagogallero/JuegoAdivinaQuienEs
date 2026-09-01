@@ -1,3 +1,4 @@
+package juego;
 import model.Filtro;
 import model.Personaje;
 import service.Buscador;
