@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,12 +69,14 @@ public class RecordService {
     public void mostrarTabla() {
         Map<String, Marcador> marcadores = cargarMarcadores();
         List<Marcador> tabla = new ArrayList<>(marcadores.values());
+        Ordenador<Marcador> ordenador = new OrdenadorPorVictorias();
 
-        tabla.sort(Comparator.comparingInt(Marcador::getPartidasGanadas).reversed());
+        tabla = ordenador.ordenar(tabla);
 
         for (Marcador marcador : tabla) {
             System.out.println(marcador.getUsuario() + " - "
                     + marcador.getPartidasGanadas() + " victorias");
         }
     }
+
 }

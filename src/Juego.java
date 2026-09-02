@@ -16,7 +16,7 @@ public class Juego {
 
     public Juego() {
         OrdenadorPorGenero ordenador = new OrdenadorPorGenero();
-        this.personajes = ordenador.ordenarPersonajes(GeneradorPersonaje.generarPersonajes());
+        this.personajes = ordenador.ordenar(GeneradorPersonaje.generarPersonajes());
         this.filtros = GeneradorFiltros.generarTodos();
         this.buscador = new Buscador();
     }
