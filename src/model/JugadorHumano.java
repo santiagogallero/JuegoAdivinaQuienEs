@@ -22,7 +22,8 @@ public class JugadorHumano extends Jugador {
         if (opcion == 2) {
             System.out.println("Personajes candidatos:");
             for (int p = 0; p < candidatosRestantes.size(); p++) {
-                System.out.println((p + 1) + ". " + candidatosRestantes.get(p).getNombre());
+                System.out.println(candidatosRestantes.get(p).getId() + ". "
+                        + candidatosRestantes.get(p).getNombre());
             }
             System.out.println("Ingrese el id del personaje que crees que es ");
             int id = Integer.parseInt(scanner.nextLine().trim());
