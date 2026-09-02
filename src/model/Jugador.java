@@ -2,7 +2,7 @@ package model;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Jugador {
+public abstract class  Jugador {
     
     protected final String nombre;
     private final Personaje secreto;
@@ -21,6 +21,8 @@ public class Jugador {
         return filtro.cumple(secreto);
     }
 
+    public abstract Jugada decidirJugada(List<Filtro> filtrosDisponibles);
+    
     public void aplicarFiltro(Filtro filtro, boolean restuestaObtenida) {
         candidatosRestantes.removeIf(p -> filtro.cumple(p) != restuestaObtenida);
     }

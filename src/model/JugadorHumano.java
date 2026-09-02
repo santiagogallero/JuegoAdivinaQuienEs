@@ -5,9 +5,9 @@ import java.util.Scanner;
 public class JugadorHumano extends Jugador {
     private final Scanner scanner;
 
-    public JugadorHumano(String nombre, Personaje secreto, List<Personaje> universoPersonajes) {
+    public JugadorHumano(String nombre, Personaje secreto, List<Personaje> universoPersonajes, Scanner scanner) {
         super(nombre, secreto, universoPersonajes);
-        this.scanner = new Scanner(System.in);
+        this.scanner = scanner;
     }
     
     @Override
@@ -27,7 +27,7 @@ public class JugadorHumano extends Jugador {
             System.out.println("Ingrese el id del personaje que crees que es ");
             int id = Integer.parseInt(scanner.nextLine().trim());
             Personaje elegido = buscarPorId(id);
-            return Jugada.adivinar(elegido);
+            return Jugada.crearJugadaAdivinanza(elegido);
         }
         System.out.println("Filtros disponibles:");
         for (int i = 0; i < filtrosDisponibles.size(); i++) {
@@ -35,8 +35,11 @@ public class JugadorHumano extends Jugador {
         }
         System.out.println("Elegi el numero de filtro: ");
         int indice =Integer.parseInt(scanner.nextLine().trim());
-        return Jugada.preguntar(filtrosDisponibles.get(indice));
+        return Jugada.crearJugadaPregunta(filtrosDisponibles.get(indice - 1));
     }
+
+
+
     private Personaje buscarPorId(int id) {
         for (Personaje p : candidatosRestantes) {
             if (p.getId() == id) {
