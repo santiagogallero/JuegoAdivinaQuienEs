@@ -67,16 +67,20 @@ public class RecordService {
     }
 
     public void mostrarTabla() {
-        Map<String, Marcador> marcadores = cargarMarcadores();
-        List<Marcador> tabla = new ArrayList<>(marcadores.values());
-        Ordenador<Marcador> ordenador = new OrdenadorPorVictorias();
-
-        tabla = ordenador.ordenar(tabla);
+        List<Marcador> tabla = obtenerTablaOrdenada();
 
         for (Marcador marcador : tabla) {
             System.out.println(marcador.getUsuario() + " - "
                     + marcador.getPartidasGanadas() + " victorias");
         }
+    }
+
+    /** Devuelve la tabla de marcadores ya ordenada, para que la GUI la pinte como quiera. */
+    public List<Marcador> obtenerTablaOrdenada() {
+        Map<String, Marcador> marcadores = cargarMarcadores();
+        List<Marcador> tabla = new ArrayList<>(marcadores.values());
+        Ordenador<Marcador> ordenador = new OrdenadorPorVictorias();
+        return ordenador.ordenar(tabla);
     }
 
 }
