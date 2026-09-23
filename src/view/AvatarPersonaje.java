@@ -1,9 +1,11 @@
 package view;
 
+import enums.CantidadPelo;
 import enums.ColorPelo;
 import model.Personaje;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
@@ -18,7 +20,10 @@ public class AvatarPersonaje extends JComponent {
 
     public AvatarPersonaje(Personaje personaje, int tamano) {
         this.personaje = personaje;
-        setPreferredSize(new Dimension(tamano, tamano));
+        Dimension dimensiones = new Dimension(tamano, tamano);
+        setPreferredSize(dimensiones);
+        setMinimumSize(dimensiones);
+        setMaximumSize(dimensiones);
         setOpaque(false);
     }
 
@@ -68,13 +73,7 @@ public class AvatarPersonaje extends JComponent {
 
         Color colorPiel = new Color(240, 200, 160);
 
-        // pelo (detras de la cara), salvo que sea calvo
-        if (!personaje.isCalvo()) {
-            g2.setColor(colorAwt(personaje.getColorPelo()));
-            int peloTop = caraTop - (int) (caraDiam * 0.22);
-            int peloDiam = (int) (caraDiam * 1.12);
-            g2.fillOval(cx - peloDiam / 2, peloTop, peloDiam, (int) (caraDiam * 0.85));
-        }
+        dibujarPelo(g2, cx, caraTop, caraDiam);
 
         // cara
         g2.setColor(colorPiel);
@@ -121,6 +120,25 @@ public class AvatarPersonaje extends JComponent {
         g2.dispose();
     }
 
+    private void dibujarPelo(Graphics2D g2, int cx, int caraTop, int caraDiam) {
+        if (personaje.getCantidadPelo() == CantidadPelo.SIN_PELO) {
+            return;
+        }
+
+        g2.setColor(colorAwt(personaje.getColorPelo()));
+        int peloTop = caraTop - (int) (caraDiam * 0.22);
+
+        if (personaje.getCantidadPelo() == CantidadPelo.MUCHO) {
+            int peloAncho = (int) (caraDiam * 1.28);
+            int peloAlto = (int) (caraDiam * 1.30);
+            g2.fillOval(cx - peloAncho / 2, peloTop, peloAncho, peloAlto);
+        } else {
+            int peloDiam = (int) (caraDiam * 1.12);
+            g2.fillOval(cx - peloDiam / 2, peloTop, peloDiam,
+                    (int) (caraDiam * 0.85));
+        }
+    }
+
     private Color colorAwt(ColorPelo colorPelo) {
         switch (colorPelo) {
             case COLORADO:
@@ -139,6 +157,11 @@ public class AvatarPersonaje extends JComponent {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setOpaque(false);
+        panel.setBorder(new EmptyBorder(4, 4, 4, 4));
+
+        Dimension tamanoTarjeta = new Dimension(tamanoAvatar + 20, tamanoAvatar + 32);
+        panel.setPreferredSize(tamanoTarjeta);
+        panel.setMinimumSize(tamanoTarjeta);
 
         AvatarPersonaje avatar = new AvatarPersonaje(personaje, tamanoAvatar);
         avatar.setAlignmentX(Component.CENTER_ALIGNMENT);

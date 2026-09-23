@@ -17,7 +17,8 @@ import java.util.List;
  * Todo el trabajo del motor del juego pasa por PartidaControllerGUI;
  * esta clase solo pinta y reacciona a clics.
  */
-public class VentanaPrincipal extends JFrame implements PartidaControllerGUI.PartidaListener {
+public class
+VentanaPrincipal extends JFrame implements PartidaControllerGUI.PartidaListener {
 
     private static final Color COLOR_FONDO = new Color(238, 236, 227);
 
@@ -36,12 +37,13 @@ public class VentanaPrincipal extends JFrame implements PartidaControllerGUI.Par
     private JLabel labelTurno;
     private JugadorHumanoGUI humanoActual;
     private boolean modoExhibicion;
+    private int numeroTurno;
     private JPanel panelPartidaMostrado; // referencia al card "partida"/"partida-exhibicion" actualmente en el contenedor
 
     public VentanaPrincipal() {
         super("Adivina Quien Es");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(950, 700);
+        setSize(1180, 760);
         setLocationRelativeTo(null);
         setMinimumSize(new Dimension(800, 600));
 
@@ -213,14 +215,24 @@ public class VentanaPrincipal extends JFrame implements PartidaControllerGUI.Par
         bitacora.setLineWrap(true);
         bitacora.setWrapStyleWord(true);
         bitacora.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        bitacora.setBackground(new Color(32, 38, 48));
+        bitacora.setForeground(new Color(235, 238, 242));
+        bitacora.setCaretColor(Color.WHITE);
+        bitacora.setMargin(new Insets(10, 12, 10, 12));
         JScrollPane scrollBitacora = new JScrollPane(bitacora);
-        scrollBitacora.setPreferredSize(new Dimension(300, 100));
+        scrollBitacora.setPreferredSize(new Dimension(315, 100));
+        scrollBitacora.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(90, 105, 125)),
+                "Historial de la partida"));
+        numeroTurno = 0;
 
         if (esHumano) {
             tableroCandidatosHumano = new PanelTableroPersonajes(
                     controller.getPersonajesPorGenero(), this::elegirAdivinanzaHumano);
             JScrollPane scrollTablero = new JScrollPane(tableroCandidatosHumano);
             scrollTablero.setBorder(BorderFactory.createTitledBorder("Tus candidatos (clic para adivinar)"));
+            scrollTablero.getVerticalScrollBar().setUnitIncrement(16);
+            scrollTablero.getHorizontalScrollBar().setUnitIncrement(16);
 
             JPanel panelAcciones = new JPanel();
             panelAcciones.setBackground(COLOR_FONDO);
@@ -260,11 +272,15 @@ public class VentanaPrincipal extends JFrame implements PartidaControllerGUI.Par
             panelAcciones.add(Box.createVerticalStrut(12));
             panelAcciones.add(textoAyuda);
 
-            JPanel centro = new JPanel(new BorderLayout(8, 8));
+            JPanel panelJuego = new JPanel(new BorderLayout(8, 8));
+            panelJuego.setOpaque(false);
+            panelJuego.add(scrollTablero, BorderLayout.CENTER);
+            panelJuego.add(panelAcciones, BorderLayout.SOUTH);
+
+            JPanel centro = new JPanel(new BorderLayout(10, 8));
             centro.setOpaque(false);
-            centro.add(scrollTablero, BorderLayout.CENTER);
-            centro.add(panelAcciones, BorderLayout.SOUTH);
-            centro.add(scrollBitacora, BorderLayout.NORTH);
+            centro.add(panelJuego, BorderLayout.CENTER);
+            centro.add(scrollBitacora, BorderLayout.EAST);
 
             panelPartida.add(centro, BorderLayout.CENTER);
         } else {
@@ -354,8 +370,15 @@ public class VentanaPrincipal extends JFrame implements PartidaControllerGUI.Par
     @Override
     public void onTurno(String nombreJugadorEnTurno, int candidatosRestantes, boolean esHumano) {
         SwingUtilities.invokeLater(() -> {
-            labelTurno.setText("Turno de " + nombreJugadorEnTurno + " - candidatos restantes: " + candidatosRestantes);
-            agregarLinea("--- Turno de " + nombreJugadorEnTurno + " (" + candidatosRestantes + " candidatos) ---");
+            numeroTurno++;
+            labelTurno.setText("Turno " + numeroTurno + " | " + nombreJugadorEnTurno
+                    + " | " + candidatosRestantes + " candidatos");
+            if (numeroTurno > 1) {
+                agregarLinea("");
+            }
+            agregarLinea("--------------------------------------------------");
+            agregarLinea("TURNO " + numeroTurno + " - " + nombreJugadorEnTurno);
+            agregarLinea("Candidatos disponibles: " + candidatosRestantes);
             if (esHumano) {
                 habilitarAcciones();
             } else {
@@ -367,7 +390,8 @@ public class VentanaPrincipal extends JFrame implements PartidaControllerGUI.Par
     @Override
     public void onPregunta(String nombreQuePregunta, String descripcionFiltro, boolean respuesta) {
         SwingUtilities.invokeLater(() -> {
-            agregarLinea(nombreQuePregunta + " pregunta: \"" + descripcionFiltro + "\" -> " + (respuesta ? "SI" : "NO"));
+            agregarLinea("Pregunta: " + descripcionFiltro);
+            agregarLinea("Respuesta: " + (respuesta ? "SI" : "NO"));
             if (tableroCandidatosHumano != null && humanoActual != null) {
                 tableroCandidatosHumano.actualizarCandidatosVigentes(humanoActual.getCandidatosRestantes());
             }
@@ -377,8 +401,8 @@ public class VentanaPrincipal extends JFrame implements PartidaControllerGUI.Par
     @Override
     public void onAdivinanza(String nombreQueAdivina, String personajeAdivinado, boolean acerto) {
         SwingUtilities.invokeLater(() -> {
-            agregarLinea(nombreQueAdivina + " arriesga: " + personajeAdivinado
-                    + " -> " + (acerto ? "ACERTO" : "SE EQUIVOCO"));
+            agregarLinea("Adivinanza de " + nombreQueAdivina + ": " + personajeAdivinado);
+            agregarLinea("Resultado: " + (acerto ? "ACERTO" : "SE EQUIVOCO"));
         });
     }
 
@@ -386,7 +410,9 @@ public class VentanaPrincipal extends JFrame implements PartidaControllerGUI.Par
     public void onFinDePartida(String ganador) {
         SwingUtilities.invokeLater(() -> {
             agregarLinea("");
-            agregarLinea(">>> Gana " + ganador + " <<<");
+            agregarLinea("==================================================");
+            agregarLinea("GANADOR: " + ganador);
+            agregarLinea("==================================================");
             deshabilitarAcciones();
             JOptionPane.showMessageDialog(this, "Gana " + ganador, "Fin de la partida", JOptionPane.INFORMATION_MESSAGE);
         });

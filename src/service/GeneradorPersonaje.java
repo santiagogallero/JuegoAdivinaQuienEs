@@ -1,5 +1,6 @@
 package service;
 
+import enums.CantidadPelo;
 import enums.ColorPelo;
 import enums.Genero;
 import model.Personaje;
@@ -25,17 +26,17 @@ public class GeneradorPersonaje {
         personajes.add(new Personaje("Lautaro", false, ColorPelo.NEGRO, Genero.MASCULINO, false));
         personajes.add(new Personaje("Bruno", true, ColorPelo.COLORADO, Genero.MASCULINO, false));
 
-        personajes.add(new Personaje("Martina", false, ColorPelo.NEGRO, Genero.FEMENINO, false));
-        personajes.add(new Personaje("Malena", true, ColorPelo.AMARILLO, Genero.FEMENINO, false));
-        personajes.add(new Personaje("Lucia", false, ColorPelo.COLORADO, Genero.FEMENINO, true));
-        personajes.add(new Personaje("Camila", false, ColorPelo.NEGRO, Genero.FEMENINO, false));
-        personajes.add(new Personaje("Agustina", true, ColorPelo.AMARILLO, Genero.FEMENINO, false));
-        personajes.add(new Personaje("Valentina", false, ColorPelo.COLORADO, Genero.FEMENINO, false));
-        personajes.add(new Personaje("Sofia", true, ColorPelo.NEGRO, Genero.FEMENINO, true));
-        personajes.add(new Personaje("Julieta", false, ColorPelo.AMARILLO, Genero.FEMENINO, false));
-        personajes.add(new Personaje("Florencia", true, ColorPelo.COLORADO, Genero.FEMENINO, false));
-        personajes.add(new Personaje("Micaela", false, ColorPelo.NEGRO, Genero.FEMENINO, true));
-        personajes.add(new Personaje("Carolina", false, ColorPelo.AMARILLO, Genero.FEMENINO, false));
+        personajes.add(new Personaje("Martina", false, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.MUCHO));
+        personajes.add(new Personaje("Malena", true, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
+        personajes.add(new Personaje("Lucia", false, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
+        personajes.add(new Personaje("Camila", false, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.MUCHO));
+        personajes.add(new Personaje("Agustina", true, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
+        personajes.add(new Personaje("Valentina", false, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.MUCHO));
+        personajes.add(new Personaje("Sofia", true, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
+        personajes.add(new Personaje("Julieta", false, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
+        personajes.add(new Personaje("Florencia", true, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.MUCHO));
+        personajes.add(new Personaje("Micaela", false, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
+        personajes.add(new Personaje("Carolina", false, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
 
         return personajes;
     }

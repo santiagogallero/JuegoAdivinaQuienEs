@@ -23,7 +23,7 @@ public class PanelTableroPersonajes extends JPanel {
     public PanelTableroPersonajes(List<Personaje> todosLosPersonajes, Consumer<Personaje> alHacerClic) {
         this.todosLosPersonajes = todosLosPersonajes;
         this.alHacerClic = alHacerClic;
-        setLayout(new GridLayout(0, 6, 8, 8));
+        setLayout(new GridLayout(0, 6, 10, 10));
         setBorder(new EmptyBorder(8, 8, 8, 8));
         setOpaque(false);
         construir(todosLosPersonajes);
@@ -32,7 +32,7 @@ public class PanelTableroPersonajes extends JPanel {
     private void construir(List<Personaje> vigentes) {
         removeAll();
         for (Personaje p : todosLosPersonajes) {
-            JPanel tarjeta = AvatarPersonaje.crearTarjeta(p, 64);
+            JPanel tarjeta = AvatarPersonaje.crearTarjeta(p, 96);
             boolean esVigente = vigentes.contains(p);
 
             AvatarPersonaje avatar = (AvatarPersonaje) tarjeta.getClientProperty("avatar");

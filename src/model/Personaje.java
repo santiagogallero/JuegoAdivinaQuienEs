@@ -1,4 +1,5 @@
 package model;
+import enums.CantidadPelo;
 import enums.ColorPelo;
 import enums.Genero;
 
@@ -8,21 +9,27 @@ public class Personaje {
 
     private final Integer id;
     private final ColorPelo colorPelo;
+    private final CantidadPelo cantidadPelo;
     private final Genero genero;
-    private final boolean calvo;
     private final boolean usaLentes;
 
 
 
 
-    public Personaje(String nombre,boolean usaLentes , ColorPelo colorPelo, Genero genero, boolean calvo) {
-        
+    public Personaje(String nombre, boolean usaLentes, ColorPelo colorPelo,
+                     Genero genero, boolean calvo) {
+        this(nombre, usaLentes, colorPelo, genero,
+                calvo ? CantidadPelo.SIN_PELO : CantidadPelo.POCO);
+    }
+
+    public Personaje(String nombre, boolean usaLentes, ColorPelo colorPelo,
+                     Genero genero, CantidadPelo cantidadPelo) {
         this.id = contador++;
         this.nombre = nombre;
         this.usaLentes = usaLentes;
         this.colorPelo = colorPelo;
+        this.cantidadPelo = cantidadPelo;
         this.genero = genero;
-        this.calvo = calvo;
     }
 
         public String getNombre() {
@@ -43,7 +50,11 @@ public class Personaje {
     }
 
     public boolean isCalvo() {
-        return calvo;
+        return cantidadPelo == CantidadPelo.SIN_PELO;
+    }
+
+    public CantidadPelo getCantidadPelo() {
+        return cantidadPelo;
     }
 
 
