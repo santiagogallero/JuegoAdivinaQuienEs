@@ -23,20 +23,20 @@ public class GeneradorPersonaje {
         personajes.add(new Personaje("Franco", false, ColorPelo.COLORADO, Genero.MASCULINO, false));
         personajes.add(new Personaje("Mateo", true, ColorPelo.NEGRO, Genero.MASCULINO, false));
         personajes.add(new Personaje("Joaquin", false, ColorPelo.AMARILLO, Genero.MASCULINO, true));
-        personajes.add(new Personaje("Lautaro", false, ColorPelo.NEGRO, Genero.MASCULINO, false));
-        personajes.add(new Personaje("Bruno", true, ColorPelo.COLORADO, Genero.MASCULINO, false));
+        personajes.add(new Personaje("Lautaro", false, ColorPelo.COLORADO, Genero.MASCULINO, true));
+        personajes.add(new Personaje("Bruno", true, ColorPelo.AMARILLO, Genero.MASCULINO, true));
 
         personajes.add(new Personaje("Martina", false, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.MUCHO));
         personajes.add(new Personaje("Malena", true, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
         personajes.add(new Personaje("Lucia", false, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
-        personajes.add(new Personaje("Camila", false, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.MUCHO));
-        personajes.add(new Personaje("Agustina", true, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
+        personajes.add(new Personaje("Camila", true, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.MUCHO));
+        personajes.add(new Personaje("Agustina", true, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
         personajes.add(new Personaje("Valentina", false, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.MUCHO));
         personajes.add(new Personaje("Sofia", true, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
         personajes.add(new Personaje("Julieta", false, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
         personajes.add(new Personaje("Florencia", true, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.MUCHO));
         personajes.add(new Personaje("Micaela", false, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
-        personajes.add(new Personaje("Carolina", false, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
+        personajes.add(new Personaje("Carolina", false, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
 
         return personajes;
     }
