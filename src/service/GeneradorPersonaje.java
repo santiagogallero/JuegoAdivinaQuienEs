@@ -1,12 +1,13 @@
 package service;
 
-import enums.CantidadPelo;
 import enums.ColorPelo;
 import enums.Genero;
 import model.Personaje;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GeneradorPersonaje {
 
@@ -26,18 +27,39 @@ public class GeneradorPersonaje {
         personajes.add(new Personaje("Lautaro", false, ColorPelo.COLORADO, Genero.MASCULINO, true));
         personajes.add(new Personaje("Bruno", true, ColorPelo.AMARILLO, Genero.MASCULINO, true));
 
-        personajes.add(new Personaje("Martina", false, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.MUCHO));
-        personajes.add(new Personaje("Malena", true, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
-        personajes.add(new Personaje("Lucia", false, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
-        personajes.add(new Personaje("Camila", true, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.MUCHO));
-        personajes.add(new Personaje("Agustina", true, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
-        personajes.add(new Personaje("Valentina", false, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.MUCHO));
-        personajes.add(new Personaje("Sofia", true, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
-        personajes.add(new Personaje("Julieta", false, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.POCO));
-        personajes.add(new Personaje("Florencia", true, ColorPelo.COLORADO, Genero.FEMENINO, CantidadPelo.MUCHO));
-        personajes.add(new Personaje("Micaela", false, ColorPelo.NEGRO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
-        personajes.add(new Personaje("Carolina", false, ColorPelo.AMARILLO, Genero.FEMENINO, CantidadPelo.SIN_PELO));
+        personajes.add(new Personaje("Martina", false, ColorPelo.NEGRO, Genero.FEMENINO, false));
+        personajes.add(new Personaje("Malena", true, ColorPelo.AMARILLO, Genero.FEMENINO, false));
+        personajes.add(new Personaje("Lucia", false, ColorPelo.COLORADO, Genero.FEMENINO, true));
+        personajes.add(new Personaje("Camila", true, ColorPelo.NEGRO, Genero.FEMENINO, false));
+        personajes.add(new Personaje("Agustina", true, ColorPelo.AMARILLO, Genero.FEMENINO, true));
+        personajes.add(new Personaje("Valentina", false, ColorPelo.COLORADO, Genero.FEMENINO, false));
+        personajes.add(new Personaje("Sofia", true, ColorPelo.NEGRO, Genero.FEMENINO, true));
+        personajes.add(new Personaje("Julieta", false, ColorPelo.AMARILLO, Genero.FEMENINO, false));
+        personajes.add(new Personaje("Florencia", true, ColorPelo.COLORADO, Genero.FEMENINO, false));
+        personajes.add(new Personaje("Micaela", false, ColorPelo.NEGRO, Genero.FEMENINO, true));
+        personajes.add(new Personaje("Carolina", false, ColorPelo.AMARILLO, Genero.FEMENINO, true));
 
+        validarPersonajesDistinguibles(personajes);
         return personajes;
+    }
+
+    private static void validarPersonajesDistinguibles(List<Personaje> personajes) {
+        if (personajes.size() != 23) {
+            throw new IllegalStateException("Deben generarse exactamente 23 personajes");
+        }
+
+        Set<String> perfiles = new HashSet<>();
+        for (Personaje personaje : personajes) {
+            String perfil = personaje.getGenero() + "|"
+                    + personaje.isCalvo() + "|"
+                    + personaje.isUsaLentes() + "|"
+                    + personaje.getColorPelo();
+
+            if (!perfiles.add(perfil)) {
+                throw new IllegalStateException(
+                        "El personaje " + personaje.getNombre()
+                                + " repite una combinacion de caracteristicas");
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 package view;
 
-import enums.CantidadPelo;
 import enums.ColorPelo;
+import enums.Genero;
 import model.Personaje;
 
 import javax.swing.*;
@@ -114,21 +114,32 @@ public class AvatarPersonaje extends JComponent {
         }
 
         // etiqueta de genero (una pequenia marca de color en la esquina, discreta)
-        g2.setColor(personaje.getGenero().name().equals("FEMENINO") ? new Color(220, 90, 140) : new Color(80, 130, 200));
+        g2.setColor(personaje.getGenero() == Genero.FEMENINO
+                ? new Color(220, 90, 140)
+                : new Color(80, 130, 200));
         g2.fillOval(w - 14, 4, 8, 8);
 
         g2.dispose();
     }
 
     private void dibujarPelo(Graphics2D g2, int cx, int caraTop, int caraDiam) {
-        if (personaje.getCantidadPelo() == CantidadPelo.SIN_PELO) {
+        if (personaje.isCalvo()) {
+            // Conserva visible el color de pelo declarado sin ocultar la calvicie.
+            g2.setColor(colorAwt(personaje.getColorPelo()));
+            int lateralAncho = Math.max(4, (int) (caraDiam * 0.16));
+            int lateralAlto = Math.max(8, (int) (caraDiam * 0.42));
+            int lateralY = caraTop + (int) (caraDiam * 0.30);
+            g2.fillOval(cx - caraDiam / 2 - lateralAncho / 3, lateralY,
+                    lateralAncho, lateralAlto);
+            g2.fillOval(cx + caraDiam / 2 - lateralAncho * 2 / 3, lateralY,
+                    lateralAncho, lateralAlto);
             return;
         }
 
         g2.setColor(colorAwt(personaje.getColorPelo()));
         int peloTop = caraTop - (int) (caraDiam * 0.22);
 
-        if (personaje.getCantidadPelo() == CantidadPelo.MUCHO) {
+        if (personaje.getGenero() == Genero.FEMENINO) {
             int peloAncho = (int) (caraDiam * 1.28);
             int peloAlto = (int) (caraDiam * 1.30);
             g2.fillOval(cx - peloAncho / 2, peloTop, peloAncho, peloAlto);
