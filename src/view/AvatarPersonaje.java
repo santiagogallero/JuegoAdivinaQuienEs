@@ -8,11 +8,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-/**
- * Dibuja un avatar simple por codigo para un Personaje, reflejando sus
- * atributos reales: color de pelo, calvicie, lentes y genero.
- * No usa ningun archivo de imagen externo.
- */
+/** Dibuja un avatar simple por codigo para un Personaje, reflejando sus atributos reales: color de pelo, calvicie, lentes y genero */
 public class AvatarPersonaje extends JComponent {
 
     private final Personaje personaje;
@@ -47,10 +43,10 @@ public class AvatarPersonaje extends JComponent {
 
         if (tapado) {
             g2.setColor(new Color(60, 60, 70));
-            g2.fillRoundRect(0, 0, w, h, 14, 14);
+            g2.fillRoundRect(0, 0, w, h, 14, 14); //Dibuja un rectángulo relleno con esquinas redondeadas
             g2.setColor(new Color(120, 120, 135));
-            g2.setStroke(new BasicStroke(2f));
-            g2.drawRoundRect(1, 1, w - 3, h - 3, 14, 14);
+            g2.setStroke(new BasicStroke(2f)); //Elige el grosor de la línea
+            g2.drawRoundRect(1, 1, w - 3, h - 3, 14, 14); //Dibuja SOLO el borde
             g2.setFont(new Font("SansSerif", Font.BOLD, (int) (h * 0.4)));
             g2.setColor(new Color(200, 200, 210));
             FontMetrics fm = g2.getFontMetrics();
