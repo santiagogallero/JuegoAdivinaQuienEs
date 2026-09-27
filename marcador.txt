@@ -1,3 +1,0 @@
-zoe,1
-Zoe,1
-Jugador,4
