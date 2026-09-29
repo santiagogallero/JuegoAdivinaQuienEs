@@ -66,7 +66,7 @@ Centralizan la creación de los 23 personajes y de los 6 filtros. Ningún otro p
 
 Resuelve el requisito *"la Máquina 2 debe partir con la ventaja de conocer las preguntas hechas por la Máquina 1"*.
 
-`HistorialPreguntas` es el *sujeto*: mantiene una lista de observadores y, cada vez que se registra una pregunta, les notifica a todos llamando `onPreguntaRegistrada(...)`. `JugadorMaquina implements HistorialPreguntas.Observador`, y al recibir la notificación agrega ese filtro a su propia lista de filtros ya usados.
+`HistorialPreguntas` es el *sujeto*: mantiene una lista de observadores y, cada vez que se registra una pregunta, les notifica a todos llamando `onPreguntaRegistrada(...)`. `JugadorMaquina implements HistorialPreguntas.Observador`, y al recibir una pregunta del rival la usa para llevar la cuenta de los candidatos que le quedan al rival (`candidatosRival`).
 
 La asimetría entre las dos máquinas **no está codificada dentro de las clases** — está en la *suscripción*, que decide `PartidaController` al armar el modo Máquina vs Máquina:
 
@@ -75,7 +75,7 @@ HistorialPreguntas historial = new HistorialPreguntas();
 historial.suscribir(maquina2); // Maquina 1 nunca se suscribe
 ```
 
-**Aclaración honesta para la defensa**: esta ventaja es *mecánica*, no *epistémica*. Cada máquina investiga el secreto de un rival distinto, así que la respuesta que dio Máquina 1 sobre su rival no dice nada lógicamente sobre el secreto que investiga Máquina 2. Lo que gana Máquina 2 es no perder un turno repitiendo exactamente una pregunta que ya se hizo en la mesa, y arrancar su propio cálculo greedy con menos filtros para evaluar — una ventaja real, pero de eficiencia, no de información sobre el secreto ajeno.
+**Qué ventaja da realmente**: la pregunta de Máquina 1 no dice nada sobre el secreto que investiga Máquina 2, así que no sirve para descartar candidatos propios (tampoco para "no repetirla": al principio se marcaba como filtro usado, y eso hacía que Máquina 2 se quedara sin preguntas útiles y perdiera casi siempre). Lo que sí sirve es que Máquina 1 pregunta sobre el secreto *de Máquina 2*, y Máquina 2 sabe la respuesta sin que nadie se la diga (`respondeFiltro` sobre su propio secreto). Con eso sabe exactamente cuántos candidatos le quedan al rival. Cuando al rival le queda uno solo (va a adivinar y ganar en su próximo turno), `EstrategiaAsertiva` arriesga una adivinanza en vez de seguir preguntando: tiene alguna chance de ganar en lugar de perder seguro. Simulando las 506 combinaciones posibles de secretos, la Máquina Asertiva gana 301 partidas contra 205 de la Básica, aun empezando segunda.
 
 ## 4. Algoritmos aplicados
 

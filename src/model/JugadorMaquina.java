@@ -9,10 +9,12 @@ public class JugadorMaquina extends Jugador implements HistorialPreguntas.Observ
 
     private final EstrategiaMaquina estrategia;
     private final List<Filtro> filtrosUsados = new ArrayList<>();
+    private final List<Personaje> candidatosRival;
 
     public JugadorMaquina(String nombre, Personaje secreto, List<Personaje> universoPersonajes, EstrategiaMaquina estrategia) {
         super(nombre, secreto, universoPersonajes);
         this.estrategia = estrategia;
+        this.candidatosRival = new ArrayList<>(universoPersonajes);
     }
 
     @Override
@@ -35,8 +37,16 @@ public class JugadorMaquina extends Jugador implements HistorialPreguntas.Observ
 
     @Override
     public void onPreguntaRegistrada(String jugador, Filtro filtro) {
-        if (!filtrosUsados.contains(filtro)) {
-            filtrosUsados.add(filtro);
+        if (jugador.equals(nombre)) {
+            return; // mis propias preguntas ya las tengo en filtrosUsados
         }
+        // La pregunta del rival es sobre MI secreto, asi que se cual fue la respuesta
+        // y puedo saber cuantos candidatos le quedan
+        boolean respuesta = respondeFiltro(filtro);
+        candidatosRival.removeIf(p -> filtro.cumple(p) != respuesta);
+    }
+
+    public List<Personaje> getCandidatosRival() {
+        return candidatosRival;
     }
 }

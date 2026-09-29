@@ -21,6 +21,12 @@ public class EstrategiaAsertiva implements EstrategiaMaquina {
             return Jugada.crearJugadaAdivinanza(candidatos.get(0));
         }
 
+        // Si al rival le queda un solo candidato, en su proximo turno adivina y gana.
+        // Es mejor arriesgar ahora que perder seguro
+        if (jugador.getCandidatosRival().size() == 1) {
+            return Jugada.crearJugadaAdivinanza(candidatos.get(0));
+        }
+
         Filtro mejorFiltro = null;
         int menorDiferencia = Integer.MAX_VALUE;
 
